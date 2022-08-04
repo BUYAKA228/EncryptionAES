@@ -1,13 +1,13 @@
 #include "AES.h"
-
+#include <stdio.h>
 
 
 
 static void CommonRound(const uint8_t PlainText[], const uint8_t Key[], uint8_t TransText[]);
-	static void SubBytes(const uint8_t PlainText[], uint8_t TransText[]);
+	static void SubBytes(uint8_t TransText[]);
 	static void ShiftRows(uint8_t TransText[]);
 	static void MixColumns(uint8_t TransText[]);
-	static void AddRoundKey(uint8_t PlainText[],const uint8_t Key[]);
+	static void AddRoundKey(const uint8_t PlainText[],const uint8_t Key[], uint8_t TransText[]);
 
 
 
@@ -17,20 +17,25 @@ static void CommonRound(const uint8_t PlainText[], const uint8_t Key[], uint8_t 
 
 void Encryption_AES128(const uint8_t PlainText[],const uint8_t Key[], uint8_t TransText[])
 {
-	
-	CommonRound(PlainText, Key, TransText);
+	AddRoundKey(PlainText, Key, TransText);
+	uint8_t IntermedianText[16] = {0};
+	CommonRound(TransText, TransText, IntermedianText);
 }
 
 
 static void CommonRound(const uint8_t PlainText[],const uint8_t Key[], uint8_t TransText[])
 {
-	SubBytes(PlainText, TransText);
-	ShiftRows(TransText);
-	MixColumns(TransText);
-	AddRoundKey(TransText, Key);
+	uint8_t IntermedianText[16] = {0};
+	for(int i =0;i<16;i++)
+		IntermedianText[i]= PlainText[i];
+	SubBytes(IntermedianText);
+	ShiftRows(IntermedianText);
+	MixColumns(IntermedianText);
+	//AddRoundKey(IntermedianText, Key, TransText);
+	
 }
 
-static void SubBytes(const uint8_t PlainText[], uint8_t TransText[])
+static void SubBytes(uint8_t TransText[])
 {
 	uint8_t* Sbox_Generator(uint8_t* Buffer, uint16_t Polynomyal)
 	{
@@ -53,7 +58,7 @@ static void SubBytes(const uint8_t PlainText[], uint8_t TransText[])
 	Sbox_Generator(SBox, POLYNOMIAL_X8_X4_X3_X1_X0);
 	
 	for(int i = 0; i<16;i++)
-		TransText[i] = SBox[PlainText[i]];
+		TransText[i] = SBox[TransText[i]];
 }
 
 static void ShiftRows(uint8_t TransText[])
@@ -119,10 +124,10 @@ static void MixColumns(uint8_t TransText[])
 				TransText[indexResult]^=GFmul_AES(Result[rows][ElemOfXOR],SafeFixMatrix[col][ElemOfXOR]);
 }
 
-static void AddRoundKey(uint8_t PlainText[],const uint8_t Key[])
+static void AddRoundKey(const uint8_t PlainText[],const uint8_t Key[], uint8_t TransText[])
 {
 	for(int i = 0; i<16; i++)
-		PlainText[i] = PlainText[i] ^ Key[i];
+		TransText[i] = PlainText[i]^Key[i];
 }
 
 
