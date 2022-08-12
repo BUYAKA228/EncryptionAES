@@ -27,10 +27,10 @@ void main()
 	
 	Encryption_AES128( Plain, Key, Trans);
 	
-	//for(int i =0;i<sizeof(Trans);i++)
-	//	if(i%4)
-	//		printf("%X ",Trans[i]);
-	//	else
-	//		printf("\n%X ",Trans[i]);
+	for(int i =0;i<sizeof(Trans);i++)
+		if(i%4)
+			printf("\t%X ",Trans[i]);
+		else
+			printf("\n\t%X ",Trans[i]);
 	
 }
