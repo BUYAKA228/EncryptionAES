@@ -1,0 +1,3 @@
+https://www.simplilearn.com/tutorials/cryptography-tutorial/aes-encryption a useful tutorial, but I think there was a mistake in the key extension part
+https://www.youtube.com/watch?v=4pmR49izUL0 useful video about KeyExpension
+https://www.youtube.com/watch?v=w4aWIVhcUyo in my opinion that is quet close to understand how does KeyExpension works
