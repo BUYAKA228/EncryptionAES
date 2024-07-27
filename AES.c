@@ -157,7 +157,7 @@ void AddRoundKey(const uint8_t PlainText[],const uint8_t Key[], uint8_t TransTex
 		TransText[i] = PlainText[i]^Key[i];
 }
 
-uint8_t* Sbox_Generator(uint8_t* Buffer, uint16_t Polynomyal)
+void Sbox_Generator(uint8_t* Buffer, uint16_t Polynomyal)
 {
 		uint8_t t[256]   ={0};
 		for (int i = 0, x = 1; i < 256; i++) {
@@ -172,7 +172,7 @@ uint8_t* Sbox_Generator(uint8_t* Buffer, uint16_t Polynomyal)
 			x ^= (x >> 4) ^ (x >> 5) ^ (x >> 6) ^ (x >> 7);
 			Buffer[t[i]] = (x ^ 0x63) & 0xFF;
 		}
-		return Buffer;
+		
 }
 
 uint8_t GFmul_AES(uint8_t Byte, uint8_t multiplier)
