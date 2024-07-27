@@ -11,7 +11,7 @@ static void KeyExpansion(const uint8_t Key[], uint8_t ExpKey[] );
 
 static void CommonRound(const uint8_t PlainText[], const uint8_t Key[], uint8_t TransText[]);
 	static void SubBytes(uint8_t TransText[]);
-		static uint8_t* Sbox_Generator(uint8_t* Buffer, uint16_t Polynomyal);
+		static uint8_t Sbox_Generator(uint8_t* Buffer, uint16_t Polynomyal);
 	static void ShiftRows(uint8_t TransText[]);
 		static void ShiftCount(uint8_t* Index, uint8_t CounterOfShift);
 	static void MixColumns(uint8_t TransText[]);
